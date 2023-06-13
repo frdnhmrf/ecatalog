@@ -7,11 +7,9 @@ class AuthDatasource {
   Future<Either<String, RegisterResponseModel>> register(
       RegisterRequestModel model) async {
     final response = await http.post(
-        Uri.parse("https://api.escuelajs.co/api/v1/users/"),
+        Uri.parse('https://api.escuelajs.co/api/v1/users/'),
         body: model.toJson(),
-        headers: {
-          'Content-Type': 'application/json',
-        });
+        headers: {'Content-Type': 'application/json'});
 
     if (response.statusCode == 201) {
       return Right(RegisterResponseModel.fromJson(response.body));
