@@ -1,7 +1,7 @@
 import 'package:ecatalog/bloc/login/login_bloc.dart';
 import 'package:ecatalog/bloc/register/register_bloc.dart';
 import 'package:ecatalog/data/datasources/auth_datasource.dart';
-import 'package:ecatalog/presentation/register_page.dart';
+import 'package:ecatalog/presentation/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const RegisterPage(),
+        home: const LoginPage(),
       ),
     );
   }

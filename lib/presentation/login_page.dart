@@ -1,6 +1,8 @@
 import 'package:ecatalog/bloc/login/login_bloc.dart';
+import 'package:ecatalog/data/datasources/local_datasource.dart';
 import 'package:ecatalog/data/models/request/login_request_model.dart';
 import 'package:ecatalog/presentation/home_page.dart';
+import 'package:ecatalog/presentation/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,9 +19,19 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    checkAuth();
     emailController = TextEditingController();
     passwordController = TextEditingController();
     super.initState();
+  }
+
+  void checkAuth() async {
+    final auth = await LocalDatasource().getToken();
+    if (auth.isNotEmpty) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return const HomePage();
+      }));
+    }
   }
 
   @override
@@ -88,6 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                 }
 
                 if (state is LoginLoaded) {
+                  LocalDatasource().saveToken(state.model.accessToken);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(
                         'Login Success with id: ${state.model.accessToken}'),
@@ -99,17 +112,17 @@ class _LoginPageState extends State<LoginPage> {
                 }
               },
             ),
-            // const SizedBox(
-            //   height: 16,
-            // ),
-            // InkWell(
-            //   onTap: () {
-            //     Navigator.push(context, MaterialPageRoute(builder: (_) {
-            //       return const HomePage();
-            //     }));
-            //   },
-            //   child: const Text('Belum punya akun? Register'),
-            // )
+            const SizedBox(
+              height: 16,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return const RegisterPage();
+                }));
+              },
+              child: const Text('Belum punya akun? Register'),
+            )
             // BlocListener<RegisterBloc, RegisterState>(
             //   listener: (context, state) {
             //     if (state is RegisterError) {
