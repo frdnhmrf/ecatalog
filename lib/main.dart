@@ -1,3 +1,4 @@
+import 'package:ecatalog/bloc/login/login_bloc.dart';
 import 'package:ecatalog/bloc/register/register_bloc.dart';
 import 'package:ecatalog/data/datasources/auth_datasource.dart';
 import 'package:ecatalog/presentation/register_page.dart';
@@ -17,6 +18,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => RegisterBloc(AuthDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => LoginBloc(AuthDatasource()),
         ),
       ],
       child: MaterialApp(
