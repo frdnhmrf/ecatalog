@@ -122,47 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                 }));
               },
               child: const Text('Belum punya akun? Register'),
-            )
-            // BlocListener<RegisterBloc, RegisterState>(
-            //   listener: (context, state) {
-            //     if (state is RegisterError) {
-            //       ScaffoldMessenger.of(context).showSnackBar(
-            //         SnackBar(
-            //           content: Text(state.message),
-            //           backgroundColor: Colors.red,
-            //         ),
-            //       );
-            //     }
-            //     if (state is RegisterLoaded) {
-            //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            //         content:
-            //             Text("Register Success with id: ${state.model.id}"),
-            //         backgroundColor: Colors.blue,
-            //       ));
-            //       Navigator.of(context).push(MaterialPageRoute(
-            //           builder: (context) => const HomePage()));
-            //     }
-            //   },
-            //   child: BlocBuilder<RegisterBloc, RegisterState>(
-            //     builder: (context, state) {
-            //       if (state is RegisterLoading) {
-            //         return const Center(child: CircularProgressIndicator());
-            //       }
-            //       return ElevatedButton(
-            //           onPressed: () {
-            //             final requestModel = RegisterRequestModel(
-            //               name: nameController!.text,
-            //               email: emailController!.text,
-            //               password: passwordController!.text,
-            //             );
-            //             context.read<RegisterBloc>().add(
-            //                   DoRegisterEvent(model: requestModel),
-            //                 );
-            //           },
-            //           child: const Text("Register"));
-            //     },
-            //   ),
-            // )
+            ),
           ],
         ),
       ),
