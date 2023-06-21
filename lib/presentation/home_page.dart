@@ -18,6 +18,8 @@ class _HomePageState extends State<HomePage> {
   TextEditingController? priceController;
   TextEditingController? descriptionController;
 
+  final scrollController = ScrollController();
+
   @override
   void initState() {
     titleController = TextEditingController();
@@ -25,6 +27,12 @@ class _HomePageState extends State<HomePage> {
     descriptionController = TextEditingController();
     super.initState();
     context.read<ProductsBloc>().add(GetProductsEvent());
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {
+        context.read<ProductsBloc>().add(NextProductsEvent());
+      }
+    });
   }
 
   @override
@@ -60,7 +68,17 @@ class _HomePageState extends State<HomePage> {
         builder: (context, state) {
           if (state is ProductsLoaded) {
             return ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              controller: scrollController,
               itemBuilder: ((context, index) {
+                if (state.isNext && index == state.data.length) {
+                  return const Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
                 return Card(
                   shadowColor: Colors.transparent,
                   child: ListTile(
@@ -73,7 +91,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               }),
-              itemCount: state.data.length,
+              itemCount:
+                  state.isNext ? state.data.length + 1 : state.data.length,
             );
           }
           return const Center(
@@ -135,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               backgroundColor: Colors.amber,
-                              content: Text(state.message ?? 'Error'),
+                              content: Text(state.message),
                             ),
                           );
                         }

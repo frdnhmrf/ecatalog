@@ -9,7 +9,23 @@ class ProductDataSource {
   Future<Either<String, List<ProductResponseModel>>> getAllProducts() async {
     final response = await http.get(
       Uri.parse('https://api.escuelajs.co/api/v1/products'),
-      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      return Right(List<ProductResponseModel>.from(jsonDecode(response.body)
+          .map((product) => ProductResponseModel.fromMap(product))));
+    } else {
+      return const Left('Gagal mendapatkan data');
+    }
+  }
+
+  Future<Either<String, List<ProductResponseModel>>> getPaginationProducts({
+    required int offset,
+    required int limit,
+  }) async {
+    final response = await http.get(
+      Uri.parse(
+          'https://api.escuelajs.co/api/v1/products/?offset=$offset&limit=$limit'),
     );
 
     if (response.statusCode == 200) {
