@@ -115,8 +115,8 @@ class _AddProductPageState extends State<AddProductPage> {
                   child: const Text("Camera")),
               ElevatedButton(
                   onPressed: () {
-                    // getImage(ImageSource.gallery);
-                    getMultipleImage();
+                    getImage(ImageSource.gallery);
+                    // getMultipleImage();
                   },
                   child: const Text("Gallery")),
             ],
@@ -145,21 +145,15 @@ class _AddProductPageState extends State<AddProductPage> {
                   decoration: const InputDecoration(
                     labelText: 'Description',
                   ),
-                  maxLength: 3,
+                  maxLines: 3,
                 ),
                 const SizedBox(height: 10),
                 BlocListener<AddCatalogCubit, AddCatalogState>(
                   listener: (context, state) {
                     state.maybeWhen(
-                      orElse: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            backgroundColor: Colors.amber,
-                            content: Text('Product added'),
-                          ),
-                        );
-                      },
+                      orElse: () {},
                       loaded: (model) {
+                        debugPrint(model.toString());
                         Navigator.pop(context);
                       },
                     );
@@ -176,7 +170,10 @@ class _AddProductPageState extends State<AddProductPage> {
                                 price: int.parse(priceController!.text),
                                 description: descriptionController!.text,
                               );
-                              context.read<AddCatalogCubit>().addCatalog(model);
+                              context.read<AddCatalogCubit>().addCatalog(
+                                    model,
+                                    image!,
+                                  );
                             },
                             child: const Text('Submit'),
                           );

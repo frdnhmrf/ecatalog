@@ -24,7 +24,7 @@ class AppTheme {
   );
 
   static final _darkAppColors = AppColorsExtension(
-    primary: Color.fromARGB(255, 144, 144, 234),
+    primary: const Color.fromARGB(255, 144, 144, 234),
     onPrimary: Colors.black,
     secondary: const Color(0xff03dac6),
     onSecondary: Colors.black,
@@ -93,4 +93,3 @@ extension AppThemeExtension on ThemeData {
 extension ThemeGetter on BuildContext {
   ThemeData get theme => Theme.of(this);
 }
-
