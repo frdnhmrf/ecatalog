@@ -1,3 +1,4 @@
+import 'package:ecatalog/bloc/add_catalog/add_catalog_cubit.dart';
 import 'package:ecatalog/bloc/add_product/add_product_bloc.dart';
 import 'package:ecatalog/bloc/login/login_bloc.dart';
 import 'package:ecatalog/bloc/products/products_bloc.dart';
@@ -28,8 +29,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ProductsBloc(ProductDataSource()),
         ),
-          BlocProvider(
+        BlocProvider(
           create: (context) => AddProductBloc(ProductDataSource()),
+        ),
+        BlocProvider(
+          create: (context) => AddCatalogCubit(ProductDataSource()),
         ),
       ],
       child: MaterialApp(
